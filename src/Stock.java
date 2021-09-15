@@ -6,23 +6,27 @@ public class Stock {
     List<Article> publishedArticles;
     List<Article> pendingArticles;
     List<Article> outOfStockArticles;
+    List<Sale> returnedSales;
+    List<Article> returnedArticles;
 
     // constructor
     public void Stock() {
 
     }
 
-    public int getNumberOfArticlesSold() {
+    public int getTotalNumberOfArticlesSold() {
         return sales.size();
     }
 
 
     public void addSoldArticle(Sale s) {
         Article soldArticle = s.getArticle();
+        int amountAvailable = soldArticle.getAmountAvailable();
+        soldArticle.setAmountAvailable(amountAvailable-1);
+        int amountSold = soldArticle.getAmountSold();
+        soldArticle.setAmountSold(amountSold + 1);
         this.soldArticles.add(soldArticle);
-        int amount = soldArticle.getAmount();
-        soldArticle.setAmount(amount-1);
-        if (soldArticle.getAmount() == 0) {
+        if (soldArticle.getAmountAvailable() == 0) {
             this.publishedArticles.remove(soldArticle);
             this.outOfStockArticles.add(soldArticle);
         }
@@ -31,6 +35,20 @@ public class Stock {
     public void addPublishedArticle(Article publishedArticle) {
         this.publishedArticles.add(publishedArticle);
         this.pendingArticles.remove(publishedArticle);
+    }
+
+    public void addPendingArticle(Article pendingArticle) {
+        this.pendingArticles.add(pendingArticle);
+    }
+
+    public void removePendingArticle(Article pendingArticle) {
+        this.pendingArticles.remove(pendingArticle);
+    }
+
+    public void addReturnedSale(Sale returnedSale) {
+        this.returnedSales.add(returnedSale);
+        this.sales.remove(returnedSale);
+        this.returnedArticles.add(returnedSale.getArticle());
     }
 
     // setters & getters

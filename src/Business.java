@@ -2,6 +2,11 @@ public class Business {
     Address businessAddress;
     String taxNumber;
 
+    public void Business(Address businessAddress, String taxNumber) {
+        this.businessAddress = businessAddress;
+        this.taxNumber = taxNumber;
+    }
+
     public Address getBusinessAddress() {
         return businessAddress;
     }

@@ -5,7 +5,7 @@ public class invoicePurchase extends Invoice{
     public void Invoice(Article article) {
         this.article = article;
         this.pathToInvoicePDF = "";
-        this.price = this.article.getPrice() * this.article.getAmount();
+        this.price = this.article.getPrice() * this.article.getAmountAvailable();
         this.date = LocalDate.now();
     }
 

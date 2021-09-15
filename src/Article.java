@@ -5,7 +5,17 @@ public class Article {
     public String name;
     public String brand;
     public double price;
-    public int amount;
+    public int amountAvailable;
+    public int amountSold;
+
+    public int getAmountSold() {
+        return amountSold;
+    }
+
+    public void setAmountSold(int amountSold) {
+        this.amountSold = amountSold;
+    }
+
     public String link;
     public String description;
     public InvoiceCustomer invoiceCustomer;
@@ -19,7 +29,7 @@ public class Article {
         this.name = name;
         this.brand = brand;
         this.price = price;
-        this.amount = amount;
+        this.amountAvailable = amount;
         this.link = link;
         this.description = description;
         this.invoiceCustomer = invoiceCustomer;
@@ -50,8 +60,8 @@ public class Article {
         this.price = price;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setAmountAvailable(int amountAvailable) {
+        this.amountAvailable = amountAvailable;
     }
 
     public void setLink(String link) {
@@ -83,8 +93,8 @@ public class Article {
         return price;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getAmountAvailable() {
+        return amountAvailable;
     }
 
     public String getLink() {
