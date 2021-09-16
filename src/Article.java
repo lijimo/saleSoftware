@@ -7,15 +7,6 @@ public class Article {
     public double price;
     public int amountAvailable;
     public int amountSold;
-
-    public int getAmountSold() {
-        return amountSold;
-    }
-
-    public void setAmountSold(int amountSold) {
-        this.amountSold = amountSold;
-    }
-
     public String link;
     public String description;
     public InvoiceCustomer invoiceCustomer;
@@ -46,6 +37,13 @@ public class Article {
                 invoiceCustomerDefault, photosDefault, logoDefault );
     }
 
+    public int getAmountSold() {
+        return amountSold;
+    }
+
+    public void setAmountSold(int amountSold) {
+        this.amountSold = amountSold;
+    }
 
     // setters
     public void setName(String name) {

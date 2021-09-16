@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Stock {
@@ -11,44 +12,72 @@ public class Stock {
 
     // constructor
     public void Stock() {
+        this.sales = new ArrayList<Sale>();
+        this.soldArticles = new ArrayList<Article>();
+        this.publishedArticles = new ArrayList<Article>();
+        this.pendingArticles = new ArrayList<Article>();
+        this.outOfStockArticles = new ArrayList<Article>();
+        this.returnedArticles = new ArrayList<Article>();
+        this.returnedSales = new ArrayList<Sale>();
+    }
 
+    // add a new item to the system
+    public void addPendingArticle(Article pending) throws NotAvailableException {
+        if (pending.getAmountAvailable() <= 0) {
+            throw new NotAvailableException();
+        }
+        pending.setOnline(false);
+        if (!this.pendingArticles.contains(pending)) {
+            this.pendingArticles.add(pending);
+        }
+        if (this.publishedArticles.contains(pending)) {
+            this.publishedArticles.remove(pending);
+        }
+    }
+
+    // delete an article before being published
+    public void deletePendingArticles(Article pending) {
+        if (this.pendingArticles.contains(pending)) {
+            this.pendingArticles.remove(pending);
+        }
+    }
+
+    // move pending article to published stock
+    public void addArticleToPublished(Article published) throws NotPendingException{
+        if (!this.pendingArticles.contains(published)) {
+            throw new NotPendingException();
+        }
+        this.publishedArticles.add(published);
+        published.setOnline(true);
+    }
+
+    // delete a published article
+    public void deletePublishedArticle(Article published) {
+        if (this.publishedArticles.contains(published)) {
+            published.setOnline(false);
+            this.publishedArticles.remove(published);
+        }
+    }
+
+    // move published article back to pending stock
+    public void movePublishedArticleBackToPending(Article published) throws AlreadyPendingException, NotAvailableException{
+        if (!this.publishedArticles.contains(published)) {
+            throw new NotAvailableException();
+        }
+        if (this.pendingArticles.contains(published)) {
+            throw new AlreadyPendingException();
+        }
+        published.setOnline(false);
+        this.publishedArticles.remove(published);
+        this.pendingArticles.add(published);
     }
 
     public int getTotalNumberOfArticlesSold() {
         return sales.size();
     }
 
-
-    public void addSoldArticle(Sale s) {
-        Article soldArticle = s.getArticle();
-        int amountAvailable = soldArticle.getAmountAvailable();
-        soldArticle.setAmountAvailable(amountAvailable-1);
-        int amountSold = soldArticle.getAmountSold();
-        soldArticle.setAmountSold(amountSold + 1);
-        this.soldArticles.add(soldArticle);
-        if (soldArticle.getAmountAvailable() == 0) {
-            this.publishedArticles.remove(soldArticle);
-            this.outOfStockArticles.add(soldArticle);
-        }
-    }
-
-    public void addPublishedArticle(Article publishedArticle) {
-        this.publishedArticles.add(publishedArticle);
-        this.pendingArticles.remove(publishedArticle);
-    }
-
-    public void addPendingArticle(Article pendingArticle) {
-        this.pendingArticles.add(pendingArticle);
-    }
-
     public void removePendingArticle(Article pendingArticle) {
         this.pendingArticles.remove(pendingArticle);
-    }
-
-    public void addReturnedSale(Sale returnedSale) {
-        this.returnedSales.add(returnedSale);
-        this.sales.remove(returnedSale);
-        this.returnedArticles.add(returnedSale.getArticle());
     }
 
     // setters & getters
