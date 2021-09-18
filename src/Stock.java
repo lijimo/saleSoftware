@@ -125,15 +125,67 @@ public class Stock {
         if (!this.soldArticles.contains(sold)) {
             throw new SaleNotExistException();
         }
-        this.soldArticles.remove(sold);
         sold.setAmountAvailable(sold.getAmountAvailable() + 1);
         sold.setAmountSold(sold.getAmountSold() - 1);
+
+        if (sold.getAmountSold() == 0) {
+            this.soldArticles.remove(sold);
+        }
         if (this.outOfStockArticles.contains(sold)) {
             this.outOfStockArticles.remove(sold);
         }
         if (!this.publishedArticles.contains(sold)) {
             this.publishedArticles.add(sold);
         }
+    }
+
+    // move article from sold to returned
+    public void addReturn(Sale sale) throws SaleNotExistException{
+        Article returned = sale.getArticle();
+        if (!this.soldArticles.contains(returned)) {
+            throw new SaleNotExistException();
+        }
+        if (this.sales.contains(sale)) {
+            this.sales.remove(sale);
+        } else {
+            throw new SaleNotExistException();
+        }
+        sale.setReturned(true);
+        if (!this.returnedSales.contains(sale)) {
+            this.returnedSales.add(sale);
+        }
+        returned.setAmountSold(returned.getAmountSold() - 1);
+        returned.setAmountReturned(returned.getAmountReturned() + 1);
+        if (!this.returnedArticles.contains(returned)) {
+            this.returnedArticles.add(returned);
+        }
+        if (returned.getAmountSold() == 0) {
+            this.soldArticles.remove(returned);
+        }
+    }
+
+    public double getTotalProfit() {
+        double profit = 0;
+        for (Sale sale : this.sales) {
+            profit += sale.getProfit();
+        }
+        return profit;
+    }
+
+    public double getTotalIncome() {
+        double income = 0;
+        for (Sale sale : this.sales) {
+            income += sale.getIncome();
+        }
+        return income;
+    }
+
+    public double getTotalTax() {
+        double tax = 0;
+        for (Sale sale : this.sales) {
+            tax += sale.getTax();
+        }
+        return tax;
     }
 
 
@@ -145,8 +197,14 @@ public class Stock {
         return counter;
     }
 
+
+
     public int getTotalNumberOfPublishedArticles() {
         return counterOfAmountAvailable(this.publishedArticles);
+    }
+
+    public int getTotalNumberOfReturnedArticles() {
+        return this.returnedArticles.size();
     }
 
     public int getTotalNumberOfPendingArticles() {
@@ -162,10 +220,6 @@ public class Stock {
     }
 
 
-
-
-
-    
     public void removePendingArticle(Article pendingArticle) {
         this.pendingArticles.remove(pendingArticle);
     }

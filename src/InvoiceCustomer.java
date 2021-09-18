@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.Date;
 
 public class InvoiceCustomer extends Invoice {
     Address businessAddress;
@@ -46,7 +45,7 @@ public class InvoiceCustomer extends Invoice {
         int x = this.sale.getAmount();
         double p = this.sale.getSalePrice();
         double g = this.sale.getShippingCost();
-        double z = this.sale.getRevenue();
+        double z = this.sale.getIncome();
 
     }
 

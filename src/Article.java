@@ -7,6 +7,7 @@ public class Article {
     public double price;
     public int amountAvailable;
     public int amountSold;
+    public int amountReturned;
     public String link;
     public String description;
     public InvoiceCustomer invoiceCustomer;
@@ -93,6 +94,14 @@ public class Article {
 
     public int getAmountAvailable() {
         return amountAvailable;
+    }
+
+    public int getAmountReturned() {
+        return amountReturned;
+    }
+
+    public void setAmountReturned(int amountReturned) {
+        this.amountReturned = amountReturned;
     }
 
     public String getLink() {

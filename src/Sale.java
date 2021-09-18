@@ -9,7 +9,8 @@ public class Sale {
     double profit;
     double fee;
     boolean returned;
-    double revenue;
+    double income;
+    double tax;
     int orderNumber;
     InvoiceCustomer invoiceCustomer;
     ShippingLabel shippingLabel;
@@ -24,7 +25,7 @@ public class Sale {
         this.shippingCost = shippingCost;
         this.fee = 0;
         this.profit = calculateProfit();
-        this.revenue = calculateRevenue();
+        this.income = calculateRevenue();
         this.returned = false;
     }
 
@@ -53,12 +54,12 @@ public class Sale {
         return article;
     }
 
-    public double getRevenue() {
-        return revenue;
+    public double getIncome() {
+        return income;
     }
 
-    public void setRevenue(double revenue) {
-        this.revenue = revenue;
+    public void setIncome(double income) {
+        this.income = income;
     }
 
     public void setArticle(Article article) {
@@ -137,4 +138,7 @@ public class Sale {
         this.shippingLabel = shippingLabel;
     }
 
+    public double getTax() {
+        return tax;
+    }
 }

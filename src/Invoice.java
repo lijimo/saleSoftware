@@ -5,6 +5,7 @@ public abstract class Invoice {
     public Article article;
     public double price;
     public String pathToInvoicePDF;
+    public int invoiceNumber;
 
     public abstract void generateInvoice();
 }
